@@ -4,6 +4,9 @@ import sys
 import pyfastaq
 import pysam
 
+import shutil
+from pathlib import Path
+
 
 def fasta_to_upper_and_ACGT_only(infile, outfile):
     f = pyfastaq.sequences.file_reader(infile)
@@ -21,7 +24,8 @@ def fasta_to_upper_and_ACGT_only(infile, outfile):
 
 def rm_rf(*paths):
     for path in paths:
-        subprocess.check_output(f"rm -rf {path}", shell=True)
+        path_to_clear = Path(path)
+        shutil.rmtree(path_to_clear, ignore_errors=True, onerror=None)
 
 
 def syscall(command, allow_fail=False, cwd=None):
